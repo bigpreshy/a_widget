@@ -1,20 +1,19 @@
-version: '3.8'
+
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: php:8.2-cli
+    container_name: acme_widget_co_app
+    working_dir: /var/www/html
     volumes:
-      - .:/app 
-    working_dir: /app
- 
+      - .:/var/www/html
+    command: php -v # Keeps the container running, or can be used to run scripts
 
- 
   composer:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: composer:latest
+    container_name: acme_widget_co_composer
+    working_dir: /var/www/html
     volumes:
-      - .:/app
-    working_dir: /app
+      - .:/var/www/html
     entrypoint: ["composer"]
+    # Example usage: docker-compose run --rm composer install
+    # Example usage: docker-compose run --rm composer test

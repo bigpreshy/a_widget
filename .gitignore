@@ -1,3 +1,5 @@
-vendor/
-.idea/
-*.env
+/vendor/
+.vscode/
+.DS_Store
+.phpstan.cache
+
