@@ -106,4 +106,21 @@ class BasketTest extends TestCase
         // Delivery (>=90) = 0.00. Final = 98.84
         $this->assertEquals(9884, $this->basket->total());
     }
+
+    public function testOfferWithMixedItemsAndMidTierDelivery(): void
+    {
+        // Two Red Widgets (R01):
+        // First R01: 3295 cents
+        // Second R01 (half price due to offer): floor(3295 / 2) = 1647 cents
+        // Subtotal for R01s with offer: 3295 + 1647 = 4942 cents.
+        // One Blue Widget (B01): 795 cents.
+        // Total Subtotal (after offer, before delivery): 4942 + 795 = 5737 cents.
+        // Delivery Charge (subtotal 5737 is >= 5000 and < 9000): 295 cents.
+        // Expected Final Total: 5737 + 295 = 6032 cents.
+
+        $this->basket->add('R01');
+        $this->basket->add('R01');
+        $this->basket->add('B01');
+        $this->assertEquals(6032, $this->basket->total());
+    }
 }
